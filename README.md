@@ -1,4 +1,4 @@
-#NTG JVM Agent
+# NTG JVM Agent
 This project aims to practice building a chatbot in Kotlin
 
 ## Technologies and frameworks
