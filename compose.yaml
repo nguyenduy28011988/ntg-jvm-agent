@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    hostname: ${POSTGRES_HOST}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./db/postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    networks:
+      - ntg-network
+  pgadmin:
+    image: dpage/pgadmin4:2024-10-19-2
+    ports:
+      - 3560:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@ntg.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - ntg-network
+
+networks:
+  ntg-network:
+    driver: bridge
+    name: ntg-network
+
+volumes:
+  postgres:
+  pgadmin:
