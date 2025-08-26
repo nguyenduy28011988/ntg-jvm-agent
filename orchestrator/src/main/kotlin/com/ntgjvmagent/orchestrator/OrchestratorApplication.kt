@@ -1,4 +1,4 @@
-package com.ntg_jvm_agent.orchestrator
+package com.ntgjvmagent.orchestrator
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

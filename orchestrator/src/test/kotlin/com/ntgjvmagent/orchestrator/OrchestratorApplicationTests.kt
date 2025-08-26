@@ -1,4 +1,4 @@
-package com.ntg_jvm_agent.orchestrator
+package com.ntgjvmagent.orchestrator
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
