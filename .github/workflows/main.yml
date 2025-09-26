@@ -39,11 +39,11 @@ jobs:
           else
             echo "auth_changed=false" >> $GITHUB_OUTPUT
           fi
-          if echo "$CHANGED" | grep -q "^orchestrator/"; then
-            echo "orchestrator_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "orchestrator_changed=false" >> $GITHUB_OUTPUT
-          fi
+#          if echo "$CHANGED" | grep -q "^orchestrator/"; then
+#            echo "orchestrator_changed=true" >> $GITHUB_OUTPUT
+#          else
+#            echo "orchestrator_changed=false" >> $GITHUB_OUTPUT
+#          fi
 
   authorization-server:
     name: Build Author server
@@ -66,8 +66,8 @@ jobs:
 
   orchestrator:
     name: Build orchestrator
-    needs: detect-changes
-    if: needs.detect-changes.outputs.orchestrator_changed == 'true'
+#    needs: detect-changes
+#    if: needs.detect-changes.outputs.orchestrator_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Get changed files
