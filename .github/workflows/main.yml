@@ -66,8 +66,8 @@ jobs:
 
   orchestrator:
     name: Build orchestrator
-#    needs: detect-changes
-#    if: needs.detect-changes.outputs.orchestrator_changed == 'true'
+    needs: detect-changes
+    if: needs.detect-changes.outputs.orchestrator_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Get changed files
