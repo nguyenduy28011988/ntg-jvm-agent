@@ -96,9 +96,6 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.chatui_changed == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 20 ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
