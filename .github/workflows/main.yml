@@ -9,32 +9,40 @@ on:
       - main
 
 jobs:
-  get-changed-files:
-    name: Detect file changes
+  detect-changes:
+    name: Detect changes in modules
     runs-on: ubuntu-latest
     outputs:
-      auth_changed: ${{ steps.filter.outputs.authorization }}
-      orchestrator_changed: ${{ steps.filter.outputs.orchestrator }}
-      chatui_changed: ${{ steps.filter.outputs.chatui }}
+      auth_changed: ${{ steps.auth-check.outputs.changed }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important: full history required for diff
 
-      - name: Get changed files
-        id: changed
-        uses: tj-actions/changed-files@v44
-
-      - name: Set output flags
-        id: filter
+      - name: Compare with base branch
+        id: diff
         run: |
-          echo "authorization=$(echo '${{ steps.changed.outputs.all_changed_files }}' | grep -q '^authorization-server/' && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "orchestrator=$(echo '${{ steps.changed.outputs.all_changed_files }}' | grep -q '^orchestrator/' && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "chatui=$(echo '${{ steps.changed.outputs.all_changed_files }}' | grep -q '^chat-ui/' && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "BASE_REF=${{ github.event.pull_request.base.sha || 'origin/main' }}" >> $GITHUB_ENV
+
+      - name: Check for changes in authorization-server
+        id: auth-check
+        run: |
+          git fetch origin main
+          CHANGED=$(git diff --name-only origin/main...HEAD)
+          echo "Changed files:"
+          echo "$CHANGED"
+          if echo "$CHANGED" | grep -q "^authorization-server/"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
 
   authorization-server:
     name: Build Author server
-    needs: get-changed-files
-    if: needs.get-changed-files.outputs.auth_changed == 'true'
+    needs: detect-changes
+    if: needs.detect-changes.outputs.auth_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
