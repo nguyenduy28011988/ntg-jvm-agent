@@ -60,8 +60,6 @@ jobs:
 
   orchestrator:
     name: Build orchestrator
-    needs: get-changed-files
-    if: needs.get-changed-files.outputs.orchestrator_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Get changed files
@@ -89,8 +87,6 @@ jobs:
 
   chat-ui:
     name: Build chat ui
-    needs: get-changed-files
-    if: needs.get-changed-files.outputs.chatui_changed == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:
