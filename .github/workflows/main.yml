@@ -2,8 +2,15 @@ name:  Build Kotlin app
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize]
+    paths:
+      - 'authorization-server/**'
+      - '.github/workflows/**'
+    branches:
+      - main
   push:
+    paths:
+      - 'authorization-server/**'
+      - '.github/workflows/**'
     branches:
       - main
 
