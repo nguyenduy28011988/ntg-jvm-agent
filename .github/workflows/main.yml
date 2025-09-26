@@ -37,16 +37,6 @@ jobs:
     if: needs.get-changed-files.outputs.auth_changed == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v44
-
-      - name: Skip if no authorization-server changes
-        if: steps.changed-files.outputs.all_changed_files != '' && !contains(steps.changed-files.outputs.all_changed_files, 'authorization-server/')
-        run: |
-          echo "No changes in authorization-server. Skipping build."
-          exit 0
-
       - name: Checkout code
         uses: actions/checkout@v5
 
@@ -62,6 +52,8 @@ jobs:
 
   orchestrator:
     name: Build orchestrator
+    needs: get-changed-files
+    if: needs.get-changed-files.outputs.orchestrator_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Get changed files
@@ -89,6 +81,8 @@ jobs:
 
   chat-ui:
     name: Build chat ui
+    needs: get-changed-files
+    if: needs.get-changed-files.outputs.chatui_changed == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:
