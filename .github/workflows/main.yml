@@ -30,3 +30,4 @@ jobs:
 
       - name: Build and test all modules
         run: mvn clean install
+        working-directory: authorization-server
