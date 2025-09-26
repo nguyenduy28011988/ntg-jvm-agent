@@ -42,3 +42,29 @@ jobs:
       - name: Build and test all modules
         run: mvn clean install
         working-directory: orchestrator
+
+  chat-ui:
+    name: Build chat ui
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 20 ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm' # or 'yarn' if using yarn
+
+      - name: Install dependencies
+        run: npm ci # or `npm install` if lock file doesn't exist
+
+      - name: Run tests
+        run: npm test # or `npm run test` if using custom script
+
+      - name: Build app (React)
+        run: npm run build
+        working-directory: chat-ui
