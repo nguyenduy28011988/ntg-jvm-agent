@@ -50,7 +50,6 @@ class AuthorizationServerConfig {
                 csrf.ignoringRequestMatchers(endpointsMatcher)
             }
 
-
         // New DSL instead of deprecated .apply()
         http.with(authorizationServerConfigurer) { }
 
