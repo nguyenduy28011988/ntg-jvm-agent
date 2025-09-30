@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
   const isAuthPage =
     req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/auth');
 
-  // If not login yet and not in login page → redirect to /login
+  // If not login yet and not in login page → redirect to /login.
   if (!accessToken && !isAuthPage) {
     return NextResponse.redirect(new URL('/login', req.url));
   }

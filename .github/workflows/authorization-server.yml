@@ -2,6 +2,8 @@ name:  Build Kotlin app
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'authorization-server/**'
   pull_request:
