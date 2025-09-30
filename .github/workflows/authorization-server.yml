@@ -1,15 +1,15 @@
 name:  Build Kotlin app
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    paths:
+      - 'authorization-server/**'
+  pull_request:
+    paths:
+      - 'authorization-server/**'
 
 jobs:
-  authorization-server:
+  build:
     name: Build Author server
     runs-on: ubuntu-latest
     defaults:
